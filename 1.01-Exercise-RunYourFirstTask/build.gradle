@@ -20,11 +20,51 @@ Challenges:
   4. Figure out my favorite type of candy.
 
 */
-
-task hello {
-    description "Hey student! Run this one :D"
-    group "Our demo"
-    doLast {
-        println "Hello World!"
-    }
+task count {
+  doLast {
+      4.times {
+        print "$it "
+      }
+  }
 }
+
+task each {
+  doLast {
+      "Hello".each {
+        print "$it "
+      }
+  }
+}
+
+task sayhi {
+  description "Vu says hello"
+  group "demo"
+  dependsOn count, each
+  dependsOn 'buildScriptsAreCode'
+  doLast {
+      println 'Hello World'
+  }
+}
+
+task buildScriptsAreCode {
+  description "Build scripts are like code"
+  group "demo"
+  doLast {
+    String mString = "This is a String"
+    println "Original: $mString"
+    println "To uppercase ${mString.toUpperCase()}"
+  }
+}
+
+4.times { counter ->
+  task "vTask$counter" {
+    doLast {
+      println "This is task $counter"
+    }
+  }
+}
+
+vTask3 {
+  description "Let's seee if works"
+  group "demo"
+}.dependsOn vTask1, vTask2
