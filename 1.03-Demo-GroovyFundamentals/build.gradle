@@ -26,6 +26,11 @@ task groovy {}
 
 println "Hello Groovy!"
 
+task vuGroovy {
+  doLast {
+    println "Do Last"
+  }
+}
 /*
 
 Most valid Java is also valid Groovy, and we can interoperate with Java, as

@@ -1,0 +1,65 @@
+task myPractice {
+  description "This is is practice on Gradle, lesson 1.03"
+  group "Udacity tutorial"
+}
+
+project.ext.hasTests=true
+
+/*
+After evaluation, add a task called 'test' after all existing projects
+*/
+allprojects {
+  afterEvaluate { project ->
+    if (project.hasTests) {
+      println "Adding test task to $project"
+      project.task('test'){
+        doLast {
+          println "Running test for $project"
+        }
+      }
+    }
+  }
+}
+
+println "1. Java interoperativity"
+class JavaGreeter {
+  public void greet(){
+    System.out.println("Hello from JAVA");
+  }
+}
+JavaGreeter greeter = new JavaGreeter()
+greeter.greet()
+
+println "2. Groovy is dynamically typed, which means type checking happens at runtime"
+def foo = 0.5
+println "foo is of type ${foo.class} and has value $foo"
+def bar = "a string"
+println "bar is of type ${bar.class} and has value $bar"
+println "foo + bar = ${foo + bar}"
+bar = 1.4
+println "After reassign, foo+bar=${foo+bar}"
+
+println "3. Groovy function"
+def doubleIt(n) {
+  n + n //Last statement is return statement.
+}
+println "Double foo ${doubleIt(foo)}"
+def foobar = "foo bar"
+println "Double foobar ${doubleIt(foobar)}"
+
+println "4. Groovy function syntactic features"
+def noArgs(){
+  println "Called the no args function"
+}
+def oneArg(x) {
+  println "Called the one arg function with $x"
+  x
+}
+def twoArgs(x, y) {
+  println "Called the two args function with $x and $y"
+  x + y
+}
+oneArg 500
+twoArgs 100, 200
+noArgs()
+twoArgs 100, oneArg(300)
