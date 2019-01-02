@@ -1,23 +1,64 @@
+plugins {
+  id 'java'
+}
 task myPractice {
   description "This is is practice on Gradle, lesson 1.03"
   group "Udacity tutorial"
 }
-
-project.ext.hasTests=true
+println name
+println project.name
+def allowTest = true
+project.ext.shouldTest=true
+ext {
+  hasTests=true
+  ok = true
+  printVersion = "1.03"
+  emailNotification="happy@cat.com"
+}
+sourceSets.all {
+  ext.purpose = null
+}
+sourceSets{
+  main {
+    purpose = "production"
+  }
+  debug {
+    purpose = "test"
+  }
+  plugin {
+    purpose = "production"
+  }
+}
 
 /*
 After evaluation, add a task called 'test' after all existing projects
 */
 allprojects {
   afterEvaluate { project ->
-    if (project.hasTests) {
+    if (project.hasTests && project.shouldTest && allowTest && ok) {
       println "Adding test task to $project"
-      project.task('test'){
+      project.task('vutest'){
         doLast {
           println "Running test for $project"
+          println emailNotification
+          sourceSets.matching {
+            it.purpose == "production"
+          }.each {
+            println it.name
+          }
         }
       }
     }
+  }
+}
+
+task configure {
+  doLast {
+    def pos = new java.text.FieldPosition(10)
+    //Apply the script
+    apply from: 'other.gradle', to: pos
+    println "Configure arbitrary objects using an external script, begin index: ${pos.beginIndex}"
+    println "Configure arbitrary objects using an external script, end index: ${pos.endIndex}"
   }
 }
 

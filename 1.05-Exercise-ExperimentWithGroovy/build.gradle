@@ -40,12 +40,8 @@ task stringsAndTypes {
 
 task closures {
     doLast {
-        // TODO: Declare a closure that takes two arguments and adds them together
-        // HINT: http://www.groovy-lang.org/closures.html
-
-        // TODO: Call your closure with arguments 17 and 25, and print the result
-        // Beware that something like `println addTwo 17, 25` is ambiguous
-
+      def foo="bar"
+      println "$foo + foo = ${foo + "foo"}"
     }
 }
 
@@ -58,6 +54,10 @@ task lists {
         // HINT: http://mrhaki.blogspot.ca/2010/05/groovy-goodness-use-collect-with.html
 
         // TODO: Print each capital candy
-
+        def myCandies = ["chocolate", "caramel", "lolipop", "struffle"]
+        def myCapitalCandies = myCandies.collect{candy -> candy.toUpperCase()}
+        myCapitalCandies.each{ i ->
+          println "Candy in capital ${i}"
+      }
     }
 }
